@@ -1,4 +1,4 @@
-package edu.umd.jun.protrack;
+package com.example.protrack;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

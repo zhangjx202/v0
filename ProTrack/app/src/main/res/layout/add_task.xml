@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- Task Name -->
+
+    <TextView
+        android:id="@+id/taskLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Task Name:"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/taskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/taskLabel"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="Enter Task Name..."
+        android:inputType="textShortMessage">
+
+        <requestFocus />
+    </EditText>
+
+    <!-- Project Name -->
+
+    <TextView
+        android:id="@+id/projectLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Project Name:"
+        android:layout_below="@+id/taskName"
+        android:layout_marginTop="35dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+    </TextView>
+
+    <Spinner
+        android:id="@+id/projectGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/status"
+        android:layout_below="@+id/projectLabel"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:prompt="@string/choose_status">
+    </Spinner>
+
+    <!-- Status & Priority -->
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/projectGroup"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="50dp"
+        android:text="Status:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/projectGroup"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="50dp"
+        android:text="Priority:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/statusANDpriority"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/status">
+
+    <Spinner
+        android:id="@+id/statusGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/status"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:prompt="@string/choose_status">
+    </Spinner>
+
+    <Spinner
+        android:id="@+id/priorityGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/priority"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:prompt="@string/choose_priority">
+    </Spinner>
+    </LinearLayout>
+
+    <!-- Start and End Dates -->
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/statusANDpriority"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="50dp"
+        android:text="Start Date:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/statusANDpriority"
+        android:layout_marginTop="25dp"
+        android:text="End Date:"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/startDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/startDate"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="50dp"
+        android:text="MM - DD - YYYY"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/endDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/endDate"
+        android:layout_marginTop="25dp"
+        android:text="MM - DD - YYYY"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/startANDend"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/startDateText">
+    <Button
+        android:id="@+id/startDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Start Date..."
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/endDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose End Date..."
+        android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- Buttons -->
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="25dp"
+        android:text="CANCEL" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="RESET" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="SUBMIT" />
+
+</RelativeLayout>

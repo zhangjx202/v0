@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">ProTrack</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="choose_status">Choose Status...</string>
+    <string name="choose_priority">Choose Priority...</string>
+
+    <string-array name="status">
+        <item>Open</item>
+        <item>Closed</item>
+    </string-array>
+
+    <string-array name="priority">
+        <item>Trivial</item>
+        <item>Minor</item>
+        <item>Major</item>
+        <item>Critical</item>
+    </string-array>
 </resources>

@@ -10,3 +10,4 @@
     android:textAlignment="center"
     android:text="00"
     android:background="@drawable/task_indicator"/>
+

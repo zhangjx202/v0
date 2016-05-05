@@ -1,4 +1,4 @@
-package edu.umd.jun.protrack;
+package com.example.protrack;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 /**
  * Created by Jun on 4/27/2016.
  */
-public class Transfer extends Activity {
+public class ExportActivity extends Activity {
     private static final String TAG = "ProTrack-Transfer";
 
     public final static String IMPORT = "IMPORT";
@@ -20,7 +20,7 @@ public class Transfer extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transfer);
+        setContentView(R.layout.export);
 
         mName = (EditText) findViewById(R.id.edtName);
 

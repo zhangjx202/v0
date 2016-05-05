@@ -1,10 +1,8 @@
-package edu.umd.jun.protrack;
+package com.example.protrack;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.shapes.RectShape;
-import android.graphics.drawable.shapes.Shape;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +23,7 @@ import java.util.HashSet;
 /**
  * Created by Matt on 4/27/2016.
  */
-public class MyCalendarView extends LinearLayout {
+public class CalendarView extends LinearLayout {
     private LinearLayout header;
     private ImageView previousButton;
     private ImageView nextButton;
@@ -40,17 +38,17 @@ public class MyCalendarView extends LinearLayout {
 
 
 
-    public MyCalendarView(Context context){
+    public CalendarView(Context context){
         super(context);
         init(context);
     }
 
-    public MyCalendarView(Context context, AttributeSet attrs) {
+    public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public MyCalendarView(Context context, AttributeSet attrs, int defStyle) {
+    public CalendarView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
