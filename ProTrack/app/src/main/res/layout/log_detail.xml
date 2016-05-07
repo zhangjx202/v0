@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- Task Name -->
+
+    <TextView
+        android:id="@+id/overviewLabel2"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Quick Overview:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black">
+    </TextView>
+
+    <TextView
+        android:id="@+id/overviewName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/overviewLabel2"
+        android:layout_marginTop="14dp"
+        android:text="Here's the overview"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black">
+
+        <requestFocus />
+    </TextView>
+
+    <!-- Project Name -->
+
+    <TextView
+        android:id="@+id/hoursLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="# Hours:"
+        android:layout_below="@+id/overviewName2"
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black">
+    </TextView>
+
+    <TextView
+        android:id="@+id/numHours2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:layout_below="@+id/hoursLabel2"
+        android:layout_marginTop="14dp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black">
+    </TextView>
+
+    <!-- Status & Priority -->
+
+    <TextView
+        android:id="@+id/comments2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/numHours2"
+        android:layout_marginTop="45dp"
+        android:text="Comments:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black"/>
+
+
+    <TextView
+        android:id="@+id/commentsVal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/comments2"
+        android:layout_marginTop="25dp"
+        android:text="Stuff Stuff Stuff Stuff Stuff Stuff Stuff Stuff Stuff Stuff Stuff Stuff "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"/>
+
+
+    <!-- Buttons -->
+
+    <Button
+        android:id="@+id/cancelButtonDetail2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="25dp"
+        android:text="CANCEL" />
+
+
+    <Button
+        android:id="@+id/submitButtonDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="EDIT" />
+
+</RelativeLayout>

@@ -1,21 +1,17 @@
 package com.example.protrack;
 
-import java.util.Date;
-
 /**
  * Created by Kevin on 4/28/2016.
  */
 public class TaskLog {
 
-    Task task;
-    Date day;
     int hours;
+    String overview;
     String comments;
 
-    public TaskLog(Task task, Date day, int hours, String comments){
-        this.task = task;
-        this.day = day;
+    public TaskLog(int hours, String overview, String comments){
         this.hours = hours;
+        this.overview = overview;
         this.comments = comments;
     }
 }

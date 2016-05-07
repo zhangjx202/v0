@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +30,14 @@ public class AddTask extends Activity {
     static TextView endDateText;
     static String startDateString;
     static String endDateString;
+
+    static int startMonth;
+    static int startDay;
+    static int startYear;
+
+    static int endMonth;
+    static int endDay;
+    static int endYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +78,52 @@ public class AddTask extends Activity {
                 prioritySpinner.setSelection(0);
                 startDateText.setText("MM - DD - YYYY");
                 endDateText.setText("MM - DD - YYYY");
+            }
+        });
+
+        // Set up OnClickListener for the Submit Button
+        final Button submitButton = (Button) findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String taskName1 = taskName.getText().toString();
+                String projectName1 = MainActivity.projects.get(projectSpinner.getSelectedItemPosition());
+
+                Task.Status status = null;
+                int statusInt = statusSpinner.getSelectedItemPosition();
+                if(statusInt == 0){
+                    status = Task.Status.OPEN;
+                } else {
+                    status = Task.Status.CLOSED;
+                }
+
+                Task.Priority priority = null;
+                int priorityInt = prioritySpinner.getSelectedItemPosition();
+                if(priorityInt == 0){
+                    priority = Task.Priority.TRIVIAL;
+                } else if(priorityInt == 1){
+                    priority = Task.Priority.MINOR;
+                } else if(priorityInt == 2){
+                    priority = Task.Priority.MAJOR;
+                } else {
+                    priority = Task.Priority.CRITICAL;
+                }
+
+
+                Intent data = new Intent();
+                data.putExtra("taskName", taskName1);
+                data.putExtra("projectName", projectName1);
+                data.putExtra("status", status);
+                data.putExtra("priority", priority);
+                data.putExtra("startMonth", startMonth);
+                data.putExtra("startDay", startDay);
+                data.putExtra("startYear", startYear);
+                data.putExtra("endMonth", endMonth);
+                data.putExtra("endDay", endDay);
+                data.putExtra("endYear", endYear);
+
+                setResult(RESULT_OK, data);
+                finish();
             }
         });
 
@@ -114,6 +169,10 @@ public class AddTask extends Activity {
             day = "0" + dayOfMonth;
 
         startDateString = mon + " - " + day + " - " + year;
+
+        startMonth = monthOfYear;
+        startDay = dayOfMonth;
+        startYear = year;
     }
 
     private static void setEndDateString(int year, int monthOfYear, int dayOfMonth) {
@@ -129,6 +188,10 @@ public class AddTask extends Activity {
             day = "0" + dayOfMonth;
 
         endDateString = mon + " - " + day + " - " + year;
+
+        endMonth = monthOfYear;
+        endDay = dayOfMonth;
+        endYear = year;
     }
 
 

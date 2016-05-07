@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- Task Name -->
+
+    <TextView
+        android:id="@+id/overviewLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Quick Overview:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black">
+    </TextView>
+
+    <EditText
+        android:id="@+id/overviewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/overviewLabel"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="Enter a quick overview of what you've implemented...">
+
+        <requestFocus />
+    </EditText>
+
+    <!-- Project Name -->
+
+    <TextView
+        android:id="@+id/hoursLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="# Hours:"
+        android:layout_below="@+id/overviewName"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black">
+    </TextView>
+
+    <Spinner
+        android:id="@+id/numHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/hoursLabel"
+        android:entries="@array/hours"
+        android:gravity="center">
+    </Spinner>
+
+    <!-- Status & Priority -->
+
+    <TextView
+        android:id="@+id/comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/numHours"
+        android:layout_marginTop="25dp"
+        android:text="Comments:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black"/>
+
+    <EditText
+        android:id="@+id/commentsVal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comments"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="Enter a long form description of what you've implemented..."/>
+
+
+    <!-- Buttons -->
+
+    <Button
+        android:id="@+id/cancelButtonDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="25dp"
+        android:text="CANCEL" />
+
+    <Button
+        android:id="@+id/resetButtonDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="RESET" />
+
+    <Button
+        android:id="@+id/submitButtonDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="SUBMIT" />
+
+</RelativeLayout>

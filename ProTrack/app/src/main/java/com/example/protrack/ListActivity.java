@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,7 +19,8 @@ public class ListActivity extends Activity {
 
     private static final int ADD_TASK_REQUEST = 10;
     private static final int ADD_PROJECT_REQUEST = 20;
-    ListAdapter adapter;
+    private static final int TASK_DETAIL_REQUEST = 30;
+    public static ListAdapter adapter;
     ListView listView;
 
     @Override
@@ -43,6 +45,29 @@ public class ListActivity extends Activity {
 
         TextView addProjectView = (TextView) findViewById(R.id.addNewProject);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent data = new Intent(getApplicationContext(), TaskDetail.class);
+                Task curr = (Task) adapter.getItem(position);
+                data.putExtra("taskName", curr.getName());
+                data.putExtra("projectName", curr.getProject());
+                data.putExtra("status", curr.getStatus());
+                data.putExtra("priority", curr.getPriority());
+                data.putExtra("startMonth", curr.getStart().getMonth());
+                data.putExtra("startDay", curr.getStart().getDay());
+                data.putExtra("startYear", curr.getStart().getYear());
+                data.putExtra("endMonth", curr.getEnd().getMonth());
+                data.putExtra("endDay", curr.getEnd().getDay());
+                data.putExtra("endYear", curr.getEnd().getYear());
+                startActivityForResult(data, TASK_DETAIL_REQUEST);
+
+            }
+        });
+
 
         // Attach Listener to addTaskView
         addTaskView.setOnClickListener(new OnClickListener() {
@@ -64,6 +89,13 @@ public class ListActivity extends Activity {
 
         // Attach the adapter to this ListActivity's ListView
         listView.setAdapter(adapter);
+
+
+
+        for(Task task : MainActivity.allTasks){
+            Log.i("ListActivity", "Adding Task to ListView!");
+            adapter.add(task);
+        }
 
     }
 
@@ -95,8 +127,38 @@ public class ListActivity extends Activity {
                         break;
                     }
             }
-        } else {
-            return;
+        } else if(requestCode == ADD_TASK_REQUEST) {
+            switch (resultCode){
+                case Activity.RESULT_CANCELED:
+                    break;
+
+                case Activity.RESULT_OK:
+                    String taskName = data.getStringExtra("taskName");
+                    String projectName = data.getStringExtra("projectName");
+                    Task.Status status = (Task.Status)data.getSerializableExtra("status");
+                    Task.Priority priority = (Task.Priority)data.getSerializableExtra("priority");
+                    int startM = data.getIntExtra("startMonth", 1);
+                    int startD = data.getIntExtra("startDay", 1);
+                    int startY = data.getIntExtra("startYear", 1);
+                    int endM = data.getIntExtra("endMonth", 1);
+                    int endD = data.getIntExtra("endDay", 1);
+                    int endY = data.getIntExtra("endYear", 1);
+
+                    Task task = new Task(taskName, projectName, priority, status, startM, startD,
+                            startY, endM, endD, endY);
+                    MainActivity.allTasks.add(task);
+                    adapter.add(task);
+                    break;
+            }
+        } else if(requestCode == TASK_DETAIL_REQUEST) {
+            switch (resultCode){
+                case Activity.RESULT_CANCELED:
+                    break;
+
+                case Activity.RESULT_OK:
+
+                    break;
+            }
         }
 
     }

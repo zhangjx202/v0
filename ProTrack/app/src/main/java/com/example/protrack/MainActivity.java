@@ -1,18 +1,26 @@
 package com.example.protrack;
 
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
 public class MainActivity extends TabActivity {
 
     public static ArrayList<String> projects;
+    public static ArrayList<Task> allTasks;
     public static TabHost tabHost;
+    public static SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,25 @@ public class MainActivity extends TabActivity {
         //Creating the TabHost that will contain the app's tabs
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
         tabHost.setup();
+
+        projects = new ArrayList<String>();
+        allTasks = new ArrayList<Task>();
+
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+        if(sharedPref.contains("com.example.ProTrack.PROJECTS")){
+            Gson gson = new Gson();
+            String json = sharedPref.getString("com.example.ProTrack.PROJECTS", "");
+            projects = gson.fromJson(json, new TypeToken<ArrayList<String>>() {}.getType());
+        }
+
+        if(MainActivity.sharedPref.contains("com.example.ProTrack.ALLTASKS")){
+            Gson gson = new Gson();
+            String json = MainActivity.sharedPref.getString("com.example.ProTrack.ALLTASKS", "");
+            allTasks = gson.fromJson(json, new TypeToken<ArrayList<Task>>() {}.getType());
+        }
+
+        Log.i("MainActivity", "AllTasks Size: " + allTasks.size() + "");
 
         TabHost.TabSpec listTab = tabHost.newTabSpec("Ongoing");
         listTab.setIndicator("Ongoing");
@@ -45,10 +72,25 @@ public class MainActivity extends TabActivity {
 
         tabHost.setCurrentTab(2);
 
-        projects = new ArrayList<String>();
-
-
 }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Save
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(projects);
+        editor.putString("com.example.ProTrack.PROJECTS", json);
+
+
+        json = gson.toJson(allTasks);
+        editor.putString("com.example.ProTrack.ALLTASKS", json);
+
+
+        editor.commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

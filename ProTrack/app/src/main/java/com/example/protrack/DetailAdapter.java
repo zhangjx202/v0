@@ -1,42 +1,32 @@
 package com.example.protrack;
 
+/**
+ * Created by Kevin on 5/7/2016.
+ */
+
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Kevin on 4/27/2016.
- */
-public class ListAdapter extends BaseAdapter {
+public class DetailAdapter extends BaseAdapter {
 
     private final Context context;
-    public final List<Task> items = new ArrayList<Task>();
+    private final List<TaskLog> items = new ArrayList<TaskLog>();
 
-    public ListAdapter(Context context){
+    public DetailAdapter(Context context){
         this.context = context;
     }
 
-    public void add(Task toAdd) {
-
-        for(Task Task : items){
-            if(Task.getName().equals(toAdd.getName())){
-                Toast.makeText(context, "You already added this Task!", Toast.LENGTH_LONG).show();
-                return;
-            }
-        }
-
+    public void add(TaskLog toAdd) {
         items.add(toAdd);
         notifyDataSetChanged();
-
     }
 
     // Clears the list adapter of all items.
@@ -99,33 +89,21 @@ public class ListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Task task = items.get(position);
+        final TaskLog log = items.get(position);
 
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout itemLayout = (RelativeLayout)mInflater.inflate(R.layout.task_list_view, parent, false);
+        RelativeLayout itemLayout = (RelativeLayout)mInflater.inflate(R.layout.log_list_view, parent, false);
 
-        final TextView taskName = (TextView)itemLayout.findViewById(R.id.taskNameLabel);
-        taskName.setText(task.getName());
+        final TextView overview = (TextView)itemLayout.findViewById(R.id.overviewLabel3);
+        overview.setText(log.overview);
 
-        final TextView projectName = (TextView)itemLayout.findViewById(R.id.projectNameLabel);
-        projectName.setText(task.getProject());
+        final TextView comments = (TextView)itemLayout.findViewById(R.id.commentsVal3);
+        comments.setText(log.comments);
 
-        final TextView urgency = (TextView)itemLayout.findViewById(R.id.urgencyLabel);
-
-        if(task.getPriority().equals(com.example.protrack.Task.Priority.TRIVIAL)){
-            urgency.setText("Trivial");
-            urgency.setTextColor(Color.GREEN);
-        } else if(task.getPriority().equals(com.example.protrack.Task.Priority.MINOR)){
-            urgency.setText("Minor");
-            urgency.setTextColor(Color.YELLOW);
-        } else if(task.getPriority().equals(com.example.protrack.Task.Priority.MAJOR)){
-            urgency.setText("MAJOR");
-            urgency.setTextColor(0xFFF06D2F);
-        } else if(task.getPriority().equals(com.example.protrack.Task.Priority.CRITICAL)){
-            urgency.setText("CRITICAL!");
-            urgency.setTextColor(Color.RED);
-        }
+        final TextView hours = (TextView)itemLayout.findViewById(R.id.hoursLabel3);
+        hours.setText("Hours: " + log.hours);
 
         return itemLayout;
     }
 }
+

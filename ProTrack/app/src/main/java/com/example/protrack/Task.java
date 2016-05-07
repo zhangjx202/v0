@@ -1,7 +1,6 @@
 package com.example.protrack;
 
 import android.graphics.Bitmap;
-import java.util.Date;
 
 import java.util.ArrayList;
 
@@ -21,18 +20,19 @@ public class Task {
     String project;
     Status status;
     Priority priority;
-    Date start;
-    Date end;
+    TaskDate start;
+    TaskDate end;
 
     ArrayList<TaskLog> taskLog;
 
-    public Task(String name, String project, Priority priority, Status status, Date start, Date end){
+    public Task(String name, String project, Priority priority, Status status, int startMonth,
+                int startDay, int startYear, int endMonth, int endDay, int endYear){
         this.name = name;
         this.project = project;
         this.priority = priority;
         this.status = status;
-        this.start = start;
-        this.end = end;
+        this.start = new TaskDate(startMonth, startDay, startYear);
+        this.end = new TaskDate(endMonth, endDay, endYear);
         this.taskLog = new ArrayList<TaskLog>();
     }
 
@@ -48,10 +48,10 @@ public class Task {
     public Priority getPriority(){
         return this.priority;
     }
-    public Date getStart(){
+    public TaskDate getStart(){
         return this.start;
     }
-    public Date getEnd(){
+    public TaskDate getEnd(){
         return this.end;
     }
     public void setName(String name){
@@ -66,10 +66,10 @@ public class Task {
     public void setPriority(Priority priority){
         this.priority = priority;
     }
-    public void setStart(Date start){
+    public void setStart(TaskDate start){
         this.start = start;
     }
-    public void setEnd(Date end){
+    public void setEnd(TaskDate end){
         this.end = end;
     }
 }

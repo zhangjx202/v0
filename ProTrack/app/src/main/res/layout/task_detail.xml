@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp" >
+
+    <TextView
+        android:id="@+id/priorityDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="20dp"
+        android:text="CRITICAL!"
+        android:textSize="25dp"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/taskNameDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/priorityDetail"
+        android:layout_centerHorizontal="true"
+        android:text="Task Name"
+        android:textSize="40dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/projectNameDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/taskNameDetail"
+        android:text="Project Name"
+        android:textSize="25dp"
+        android:paddingBottom="35dp"
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/startDateDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/projectNameDetail"
+        android:layout_alignParentLeft="true"
+        android:text="MM - DD - YYYY"
+        android:textSize="20dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/endDateDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/projectNameDetail"
+        android:layout_alignParentRight="true"
+        android:text="MM - DD - YYYY"
+        android:textSize="20dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/statusDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startDateDetail"
+        android:text="Close Task"
+        android:paddingBottom="30dp"
+        android:paddingTop="30dp"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <ListView
+        android:id="@+id/listViewDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/statusDetail"
+        android:background="@android:color/transparent"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
+    </ListView>
+
+    <Button
+        android:id="@+id/cancelButtonDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="CANCEL" />
+
+</RelativeLayout>

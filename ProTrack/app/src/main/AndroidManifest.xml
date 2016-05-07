@@ -45,6 +45,24 @@
         </activity>
 
         <activity
+            android:name=".AddLog"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".LogDetail"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".TaskDetail"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
             android:name=".CalendarActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
