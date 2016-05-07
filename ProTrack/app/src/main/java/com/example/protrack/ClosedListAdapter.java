@@ -1,10 +1,13 @@
 package com.example.protrack;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,11 +29,12 @@ public class ClosedListAdapter extends BaseAdapter {
 
             for(Task Task : items){
                 if(Task.place.equals(toAdd.place)){
-                    Toast.makeText(context, "You already have this location Task!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "You already closed this Task!", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
 
+            MainActivity.closedTasks.add(toAdd);
             items.add(toAdd);
             notifyDataSetChanged();
 
@@ -42,6 +46,14 @@ public class ClosedListAdapter extends BaseAdapter {
             items.clear();
             notifyDataSetChanged();
         }
+
+    public void open(Task task){
+        items.remove(task);
+        MainActivity.closedTasks.remove(task);
+        notifyDataSetChanged();
+
+        MainActivity.listAdapter.add(task);
+    }
 
         /**
          * How many items are in the data set represented by this Adapter.
@@ -96,22 +108,34 @@ public class ClosedListAdapter extends BaseAdapter {
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final Task Task = items.get(position);
+            final Task task = items.get(position);
 
-        /*LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout itemLayout = (RelativeLayout)mInflater.inflate(R.layout.Task, parent, false);
+            LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            RelativeLayout itemLayout = (RelativeLayout)mInflater.inflate(R.layout.task_list_view, parent, false);
 
-        final TextView place = (TextView)itemLayout.findViewById(R.id.place);
-        place.setText("Place: " + Task.place);
+            final TextView taskName = (TextView)itemLayout.findViewById(R.id.taskNameLabel);
+            taskName.setText(task.getName());
 
-        final TextView country = (TextView)itemLayout.findViewById(R.id.country);
-        country.setText("Country: " + Task.country);
+            final TextView projectName = (TextView)itemLayout.findViewById(R.id.projectNameLabel);
+            projectName.setText(task.getProject());
 
-        final ImageView flag = (ImageView)itemLayout.findViewById(R.id.image);
-        flag.setImageBitmap(Task.flag);
+            final TextView urgency = (TextView)itemLayout.findViewById(R.id.urgencyLabel);
 
-        return itemLayout;*/
-            return null;
+            if(task.getPriority().equals(com.example.protrack.Task.Priority.TRIVIAL)){
+                urgency.setText("Trivial");
+                urgency.setTextColor(Color.GREEN);
+            } else if(task.getPriority().equals(com.example.protrack.Task.Priority.MINOR)){
+                urgency.setText("Minor");
+                urgency.setTextColor(Color.YELLOW);
+            } else if(task.getPriority().equals(com.example.protrack.Task.Priority.MAJOR)){
+                urgency.setText("MAJOR");
+                urgency.setTextColor(0xFFF06D2F);
+            } else if(task.getPriority().equals(com.example.protrack.Task.Priority.CRITICAL)){
+                urgency.setText("CRITICAL!");
+                urgency.setTextColor(Color.RED);
+            }
+
+            return itemLayout;
         }
 
 }

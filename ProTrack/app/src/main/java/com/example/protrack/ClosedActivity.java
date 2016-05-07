@@ -29,6 +29,7 @@ public class ClosedActivity extends Activity {
 
         // Create a new TodoListAdapter for this ListActivity's ListView
         adapter = new ClosedListAdapter(getApplicationContext());
+        MainActivity.closedAdapter = adapter;
 
         // Put divider between ToDoItems and FooterView
         listView.setFooterDividersEnabled(true);
@@ -65,6 +66,10 @@ public class ClosedActivity extends Activity {
         // Attach the adapter to this ListActivity's ListView
         listView.setAdapter(adapter);
 
+        for(Task task : MainActivity.closedTasks){
+            Log.i("ListActivity", "Adding Task to ClosedListView!");
+            adapter.add(task);
+        }
     }
 
     @Override

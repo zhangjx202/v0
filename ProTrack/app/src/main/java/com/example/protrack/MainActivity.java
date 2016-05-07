@@ -18,9 +18,13 @@ import java.util.ArrayList;
 public class MainActivity extends TabActivity {
 
     public static ArrayList<String> projects;
-    public static ArrayList<Task> allTasks;
+    public static ArrayList<Task> openTasks;
+    public static ArrayList<Task> closedTasks;
     public static TabHost tabHost;
     public static SharedPreferences sharedPref;
+    public static ListAdapter listAdapter;
+    public static DetailAdapter detailAdapter;
+    public static ClosedListAdapter closedAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,8 @@ public class MainActivity extends TabActivity {
         tabHost.setup();
 
         projects = new ArrayList<String>();
-        allTasks = new ArrayList<Task>();
+        openTasks = new ArrayList<Task>();
+        closedTasks = new ArrayList<Task>();
 
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
@@ -42,13 +47,19 @@ public class MainActivity extends TabActivity {
             projects = gson.fromJson(json, new TypeToken<ArrayList<String>>() {}.getType());
         }
 
-        if(MainActivity.sharedPref.contains("com.example.ProTrack.ALLTASKS")){
+        if(MainActivity.sharedPref.contains("com.example.ProTrack.OPENTASKS")){
             Gson gson = new Gson();
-            String json = MainActivity.sharedPref.getString("com.example.ProTrack.ALLTASKS", "");
-            allTasks = gson.fromJson(json, new TypeToken<ArrayList<Task>>() {}.getType());
+            String json = MainActivity.sharedPref.getString("com.example.ProTrack.OPENTASKS", "");
+            openTasks = gson.fromJson(json, new TypeToken<ArrayList<Task>>() {}.getType());
         }
 
-        Log.i("MainActivity", "AllTasks Size: " + allTasks.size() + "");
+        if(MainActivity.sharedPref.contains("com.example.ProTrack.CLOSEDTASKS")){
+            Gson gson = new Gson();
+            String json = MainActivity.sharedPref.getString("com.example.ProTrack.CLOSEDTASKS", "");
+            closedTasks = gson.fromJson(json, new TypeToken<ArrayList<Task>>() {}.getType());
+        }
+
+        Log.i("MainActivity", "AllTasks Size: " + openTasks.size() + "");
 
         TabHost.TabSpec listTab = tabHost.newTabSpec("Ongoing");
         listTab.setIndicator("Ongoing");
@@ -85,8 +96,11 @@ public class MainActivity extends TabActivity {
         editor.putString("com.example.ProTrack.PROJECTS", json);
 
 
-        json = gson.toJson(allTasks);
-        editor.putString("com.example.ProTrack.ALLTASKS", json);
+        json = gson.toJson(openTasks);
+        editor.putString("com.example.ProTrack.OPENTASKS", json);
+
+        json = gson.toJson(closedTasks);
+        editor.putString("com.example.ProTrack.CLOSEDTASKS", json);
 
 
         editor.commit();

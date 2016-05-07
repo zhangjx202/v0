@@ -30,6 +30,7 @@ public class TaskDetail extends Activity {
         setContentView(R.layout.task_detail);
 
         adapter = new DetailAdapter(getApplicationContext());
+        MainActivity.detailAdapter = adapter;
 
         // TODO - implement the Activity
         Intent data = getIntent();
@@ -44,7 +45,7 @@ public class TaskDetail extends Activity {
         int endD = data.getIntExtra("endDay", 1);
         int endY = data.getIntExtra("endYear", 1);
 
-        for(Task task1 : MainActivity.allTasks){
+        for(Task task1 : MainActivity.openTasks){
             if(task1.getName().equals(taskName)){
                 task = task1;
                 break;
@@ -118,6 +119,16 @@ public class TaskDetail extends Activity {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+
+        TextView closeView = (TextView) findViewById(R.id.statusDetail);
+        closeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.listAdapter.close(task);
+                setResult(RESULT_OK);
                 finish();
             }
         });

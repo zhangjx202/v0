@@ -32,6 +32,7 @@ public class ListActivity extends Activity {
 
         // Create a new TodoListAdapter for this ListActivity's ListView
         adapter = new ListAdapter(getApplicationContext());
+        MainActivity.listAdapter = adapter;
 
         // Put divider between ToDoItems and FooterView
         listView.setFooterDividersEnabled(true);
@@ -92,7 +93,7 @@ public class ListActivity extends Activity {
 
 
 
-        for(Task task : MainActivity.allTasks){
+        for(Task task : MainActivity.openTasks){
             Log.i("ListActivity", "Adding Task to ListView!");
             adapter.add(task);
         }
@@ -146,7 +147,6 @@ public class ListActivity extends Activity {
 
                     Task task = new Task(taskName, projectName, priority, status, startM, startD,
                             startY, endM, endD, endY);
-                    MainActivity.allTasks.add(task);
                     adapter.add(task);
                     break;
             }
@@ -156,7 +156,6 @@ public class ListActivity extends Activity {
                     break;
 
                 case Activity.RESULT_OK:
-
                     break;
             }
         }
