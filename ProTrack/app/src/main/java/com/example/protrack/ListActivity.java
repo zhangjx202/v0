@@ -147,6 +147,7 @@ public class ListActivity extends Activity {
 
                     Task task = new Task(taskName, projectName, priority, status, startM, startD,
                             startY, endM, endD, endY);
+                    MainActivity.openTasks.add(task);
                     adapter.add(task);
                     break;
             }

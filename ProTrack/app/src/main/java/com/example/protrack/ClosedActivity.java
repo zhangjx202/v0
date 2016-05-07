@@ -48,8 +48,7 @@ public class ClosedActivity extends Activity {
         wipeTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentForNewTask = new Intent(getBaseContext(), AddTask.class);
-                startActivityForResult(intentForNewTask, WIPE_TASKS_REQUEST);
+                adapter.clear();
             }
         });
 
@@ -67,7 +66,7 @@ public class ClosedActivity extends Activity {
         listView.setAdapter(adapter);
 
         for(Task task : MainActivity.closedTasks){
-            Log.i("ListActivity", "Adding Task to ClosedListView!");
+            Log.i("ListActivity", "Adding Task to ListView!");
             adapter.add(task);
         }
     }

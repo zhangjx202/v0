@@ -34,7 +34,7 @@ public class ListAdapter extends BaseAdapter {
             }
         }
 
-        MainActivity.openTasks.add(toAdd);
+        //MainActivity.openTasks.add(toAdd);
         items.add(toAdd);
         notifyDataSetChanged();
 
@@ -52,6 +52,7 @@ public class ListAdapter extends BaseAdapter {
         MainActivity.openTasks.remove(task);
         notifyDataSetChanged();
 
+        MainActivity.closedTasks.add(task);
         MainActivity.closedAdapter.add(task);
     }
 
