@@ -7,7 +7,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
@@ -54,7 +53,23 @@ public class ReportActivity extends Activity {
             }
 
         }
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        mOpenSummary.setText(MainActivity.listAdapter.getSummary());
+        mCloseSummary.setText(MainActivity.closedAdapter.getSummary());
+        mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
+                + MainActivity.listAdapter.getTotalHours()));
+        mCount.setText("" + (MainActivity.closedAdapter.getCount()
+                + MainActivity.listAdapter.getCount()));
+
+        updateGraph();
+    }
+
+    private void updateGraph(){
         GraphView line_graph = (GraphView) findViewById(R.id.graph);
 
         LineGraphSeries<DataPoint> series1 =
@@ -126,24 +141,16 @@ public class ReportActivity extends Activity {
         series1.setTitle("Open Tasks");
         series2.setTitle("Closed Tasks");
         line_graph.getLegendRenderer().setVisible(true);
-        line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        //line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        line_graph.getLegendRenderer().setFixedPosition(0, 0);
 
         // bounds
         line_graph.getViewport().setBackgroundColor(Color.WHITE);
-        line_graph.getViewport().setMaxX(12d);
-        line_graph.getViewport().setMaxY(12d);
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-        mOpenSummary.setText(MainActivity.listAdapter.getSummary());
-        mCloseSummary.setText(MainActivity.closedAdapter.getSummary());
-        mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
-                + MainActivity.listAdapter.getTotalHours()));
-        mCount.setText("" + (MainActivity.closedAdapter.getCount()
-                + MainActivity.listAdapter.getCount()));
-
+        line_graph.getViewport().setYAxisBoundsManual(true);
+        line_graph.getViewport().setXAxisBoundsManual(true);
+        line_graph.getViewport().setMinX(0);
+        line_graph.getViewport().setMaxX(12);
+        line_graph.getViewport().setMinY(0);
+        line_graph.getViewport().setMaxY(12);
     }
 }
