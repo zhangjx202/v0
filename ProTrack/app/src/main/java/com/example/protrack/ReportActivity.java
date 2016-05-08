@@ -32,23 +32,28 @@ public class ReportActivity extends Activity {
     private TextView mCloseSummary;
     private TextView mCount;
 
+    private ClosedListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.report_view);
 
-        if(MainActivity.closedAdapter == null){return;}
-
         mOpenSummary = (TextView) findViewById(R.id.summaryOpenText);
-        mOpenSummary.setText(MainActivity.listAdapter.getSummary());
         mCloseSummary = (TextView) findViewById(R.id.summaryCloseText);
-        mCloseSummary.setText(MainActivity.closedAdapter.getSummary());
         mHours = (TextView) findViewById(R.id.hoursText);
-        mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
-                + MainActivity.listAdapter.getTotalHours()));
         mCount = (TextView) findViewById(R.id.countText);
-        mCount.setText("" + (MainActivity.closedAdapter.getCount()
-                + MainActivity.listAdapter.getCount()));
+
+        if(MainActivity.closedAdapter == null){
+            adapter = new ClosedListAdapter(getApplicationContext());
+            MainActivity.closedAdapter = adapter;
+
+            for(Task task : MainActivity.closedTasks){
+                adapter.add(task);
+            }
+
+        }
 
         GraphView line_graph = (GraphView) findViewById(R.id.graph);
 
@@ -129,5 +134,16 @@ public class ReportActivity extends Activity {
         line_graph.getViewport().setMaxY(12d);
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
 
+        mOpenSummary.setText(MainActivity.listAdapter.getSummary());
+        mCloseSummary.setText(MainActivity.closedAdapter.getSummary());
+        mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
+                + MainActivity.listAdapter.getTotalHours()));
+        mCount.setText("" + (MainActivity.closedAdapter.getCount()
+                + MainActivity.listAdapter.getCount()));
+
+    }
 }
