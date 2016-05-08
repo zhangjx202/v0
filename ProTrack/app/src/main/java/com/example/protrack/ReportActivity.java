@@ -23,8 +23,9 @@ public class ReportActivity extends Activity {
     private static final String TAG = "ProTrack-Report";
 
     public final static String REPORT = "REPORT";
+    public final static String REPORT_HOURS = "REPORT_HOURS";
 
-    private TextView mName;
+    private TextView mHours;
     private TextView mSummary;
 
     @Override
@@ -34,6 +35,9 @@ public class ReportActivity extends Activity {
 
         mSummary = (TextView) findViewById(R.id.summarytext);
         mSummary.setText(getIntent().getStringExtra(REPORT));
+
+        mHours = (TextView) findViewById(R.id.hoursText);
+        mHours.setText("" + getIntent().getIntExtra(REPORT_HOURS, 0));
 
         GraphView line_graph = (GraphView) findViewById(R.id.graph);
 

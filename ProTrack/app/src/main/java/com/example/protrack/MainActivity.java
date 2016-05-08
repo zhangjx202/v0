@@ -46,6 +46,7 @@ public class MainActivity extends TabActivity {
         reportTab.setIndicator("Report");
         Intent reportIntent = new Intent(this, ReportActivity.class);
         reportIntent.putExtra(ReportActivity.REPORT, mAdapter.getSummary());
+        reportIntent.putExtra(ReportActivity.REPORT_HOURS, mAdapter.getTotalHours());
         reportTab.setContent(reportIntent);
         tabHost.addTab(reportTab);
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +22,21 @@ public class ListAdapter extends BaseAdapter {
     }
 
     public void add(Task toAdd) {
-
-        for(Task Task : items){
-            if(Task.place.equals(toAdd.place)){
-                Toast.makeText(context, "You already have this location Task!", Toast.LENGTH_LONG).show();
-                return;
-            }
-        }
-
         items.add(toAdd);
         notifyDataSetChanged();
 
+    }
+
+    public int getTotalHours(){
+        int hours = 0;
+
+        for(Task item: items){
+            for(TaskLog log: item.getLog()){
+                hours += log.getHours();
+            }
+        }
+
+        return hours;
     }
 
     public String getSummary(){
@@ -44,9 +47,6 @@ public class ListAdapter extends BaseAdapter {
 
         int oCriticalTask = 0, oMajorTask = 0, oMinorTask = 0, oTrivialTask = 0;
         int cCriticalTask = 0, cMajorTask = 0, cMinorTask = 0, cTrivialTask = 0;
-
-        int hours = 0;
-
 
         for(Task item: items){
             if(item.getStatus() == Task.Status.OPEN){
@@ -70,7 +70,6 @@ public class ListAdapter extends BaseAdapter {
                 }
 
             }else if(item.getStatus() == Task.Status.CLOSED){
-                hours += item.getHour();
                 closeTask++;
 
                 switch(item.getPriority()){
@@ -103,7 +102,6 @@ public class ListAdapter extends BaseAdapter {
                 + "----Major: " + cMajorTask + "\n"
                 + "----Minor: " + cMinorTask + "\n"
                 + "----Trivial: " + cTrivialTask + "\n"
-                + "----Committed Hours: " + hours + "\n"
         ;
 
         return taskSummary;

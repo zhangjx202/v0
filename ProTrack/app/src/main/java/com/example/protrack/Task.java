@@ -1,19 +1,12 @@
 package com.example.protrack;
 
-import android.graphics.Bitmap;
-import java.util.Date;
-
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Kevin on 4/27/2016.
  */
 public class Task {
-
-    String place;
-    String country;
-    Bitmap flag;
-
     public enum Status {OPEN, CLOSED};
     public enum Priority {TRIVIAL, MINOR, MAJOR, CRITICAL};
 
@@ -23,7 +16,6 @@ public class Task {
     Priority priority;
     Date start;
     Date end;
-    int hour;
 
     ArrayList<TaskLog> taskLog;
 
@@ -35,7 +27,6 @@ public class Task {
         this.start = start;
         this.end = end;
         this.taskLog = new ArrayList<TaskLog>();
-        this.hour = hour;
     }
 
     public String getName(){
@@ -56,7 +47,9 @@ public class Task {
     public Date getEnd(){
         return this.end;
     }
-    public int getHour() { return this.hour; }
+    public ArrayList<TaskLog> getLog(){
+        return this.taskLog;
+    }
     public void setName(String name){
         this.name = name;
     }
@@ -75,5 +68,8 @@ public class Task {
     public void setEnd(Date end){
         this.end = end;
     }
-    public void setHour(int hour) { this.hour = hour; }
+    public void setLog(ArrayList<TaskLog> log){
+        this.taskLog = log;
+    }
+
 }

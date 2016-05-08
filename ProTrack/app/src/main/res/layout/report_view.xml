@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="All Tasks Summary"
-        android:textSize="24dp"
+        android:textSize="28dp"
         android:layout_marginBottom="20dp"/>
 
     <com.jjoe64.graphview.GraphView
@@ -31,13 +31,32 @@
 
 
     <TextView
+        android:id="@+id/hoursMsgText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Hours Committed"
+        android:layout_below="@+id/graph"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:text="Large Text"
+        android:id="@+id/hoursText"
+        android:layout_below="@+id/hoursMsgText"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
         android:id="@+id/summarytext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tasks Summary:"
         android:textSize="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_below="@id/graph"/>
+        android:layout_below="@id/hoursText"/>
+
 
 </RelativeLayout>
 

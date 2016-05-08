@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,7 @@ public class ClosedListAdapter extends BaseAdapter {
         public void add(Task toAdd) {
 
             for(Task Task : items){
-                if(Task.place.equals(toAdd.place)){
-                    Toast.makeText(context, "You already have this location Task!", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                //check task if exist
             }
 
             items.add(toAdd);
