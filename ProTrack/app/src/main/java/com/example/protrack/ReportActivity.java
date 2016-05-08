@@ -38,14 +38,15 @@ public class ReportActivity extends Activity {
         setContentView(R.layout.report_view);
 
         mOpenSummary = (TextView) findViewById(R.id.summaryOpenText);
-        mOpenSummary.setText(getIntent().getStringExtra(REPORT_OPEN));
+        mOpenSummary.setText(MainActivity.listAdapter.getSummary());
         mCloseSummary = (TextView) findViewById(R.id.summaryCloseText);
-        mCloseSummary.setText(getIntent().getStringExtra(REPORT_CLOSE));
-
+        mCloseSummary.setText(MainActivity.closedAdapter.getSummary());
         mHours = (TextView) findViewById(R.id.hoursText);
-        mHours.setText("" + getIntent().getIntExtra(REPORT_HOURS, 0));
+        mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
+                + MainActivity.listAdapter.getTotalHours()));
         mCount = (TextView) findViewById(R.id.countText);
-        mHours.setText("" + getIntent().getIntExtra(REPORT_COUNT, 0));
+        mCount.setText("" + (MainActivity.closedAdapter.getCount()
+                + MainActivity.listAdapter.getCount()));
 
         GraphView line_graph = (GraphView) findViewById(R.id.graph);
 

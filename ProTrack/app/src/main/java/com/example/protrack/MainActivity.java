@@ -79,12 +79,6 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec reportTab = tabHost.newTabSpec("Report View");
         reportTab.setIndicator("Report");
         Intent reportIntent = new Intent(this, ReportActivity.class);
-        reportIntent.putExtra(ReportActivity.REPORT_OPEN, listAdapter.getSummary());
-        reportIntent.putExtra(ReportActivity.REPORT_CLOSE, closedAdapter.getSummary());
-        reportIntent.putExtra(ReportActivity.REPORT_HOURS
-                , listAdapter.getTotalHours() + closedAdapter.getTotalHours());
-        reportIntent.putExtra(ReportActivity.REPORT_COUNT
-                , listAdapter.getCount() + closedAdapter.getCount());
         reportTab.setContent(reportIntent);
         tabHost.addTab(reportTab);
 
