@@ -33,7 +33,7 @@ public class ReportActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_view);
 
-        mSummary = (TextView) findViewById(R.id.summarytext);
+        mSummary = (TextView) findViewById(R.id.summaryText);
         mSummary.setText(getIntent().getStringExtra(REPORT));
 
         mHours = (TextView) findViewById(R.id.hoursText);
@@ -43,11 +43,16 @@ public class ReportActivity extends Activity {
 
         LineGraphSeries<DataPoint> series1 =
                 new LineGraphSeries<DataPoint>(new DataPoint[] {
-                        new DataPoint(0, 0),
-                        new DataPoint(1, 5),
+                        new DataPoint(0, 1),
+                        new DataPoint(1, 2),
                         new DataPoint(2, 3),
-                        new DataPoint(3, 2),
-                        new DataPoint(4, 6)
+                        new DataPoint(3, 4),
+                        new DataPoint(4, 5),
+                        new DataPoint(5, 6),
+                        new DataPoint(6, 7),
+                        new DataPoint(7, 8),
+                        new DataPoint(8, 9),
+                        new DataPoint(9, 10)
                 });
 
         //series1.setDrawDataPoints(true);
@@ -72,11 +77,16 @@ public class ReportActivity extends Activity {
         //second graph
         LineGraphSeries<DataPoint> series2 =
                 new LineGraphSeries<DataPoint>(new DataPoint[] {
-                    new DataPoint(0, 0),
-                    new DataPoint(1, 3),
-                    new DataPoint(2, 6),
-                    new DataPoint(3, 2),
-                    new DataPoint(4, 5)
+                        new DataPoint(0, 0),
+                        new DataPoint(1, 0),
+                        new DataPoint(2, 1),
+                        new DataPoint(3, 1),
+                        new DataPoint(4, 2),
+                        new DataPoint(5, 2),
+                        new DataPoint(6, 3),
+                        new DataPoint(7, 3),
+                        new DataPoint(8, 4),
+                        new DataPoint(9, 4)
                 });
         //draw points
         //series2.setDrawDataPoints(true);
@@ -101,8 +111,7 @@ public class ReportActivity extends Activity {
         series2.setTitle("Closed Tasks");
         line_graph.getLegendRenderer().setVisible(true);
         line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
-
+        
     }
 
 
