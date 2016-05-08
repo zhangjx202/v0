@@ -38,6 +38,82 @@ public class ClosedListAdapter extends BaseAdapter {
             notifyDataSetChanged();
         }
 
+
+    public int getTotalHours(){
+        int hours = 0;
+
+        for(Task item: items){
+            for(TaskLog log: item.getLog()){
+                hours += log.getHours();
+            }
+        }
+
+        return hours;
+    }
+
+    public String getSummary(){
+        String taskSummary = "";
+
+        int openTask = 0;
+        int closeTask = 0;
+
+        int oCriticalTask = 0, oMajorTask = 0, oMinorTask = 0, oTrivialTask = 0;
+        int cCriticalTask = 0, cMajorTask = 0, cMinorTask = 0, cTrivialTask = 0;
+
+        for(Task item: items){
+            if(item.getStatus() == Task.Status.OPEN){
+                openTask++;
+
+                switch(item.getPriority()){
+                    case CRITICAL:
+                        oCriticalTask++;
+                        break;
+                    case MAJOR:
+                        oMajorTask++;
+                        break;
+                    case MINOR:
+                        oMinorTask++;
+                        break;
+                    case TRIVIAL:
+                        oTrivialTask++;
+                        break;
+                    default:
+                        break;
+                }
+
+            }else if(item.getStatus() == Task.Status.CLOSED){
+                closeTask++;
+
+                switch(item.getPriority()){
+                    case CRITICAL:
+                        cCriticalTask++;
+                        break;
+                    case MAJOR:
+                        cMajorTask++;
+                        break;
+                    case MINOR:
+                        cMinorTask++;
+                        break;
+                    case TRIVIAL:
+                        cTrivialTask++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        taskSummary += "--Close Tasks: " + closeTask + "\n"
+                + "----Critical: " + cCriticalTask + "\n"
+                + "----Major: " + cMajorTask + "\n"
+                + "----Minor: " + cMinorTask + "\n"
+                + "----Trivial: " + cTrivialTask + "\n"
+        ;
+
+        return taskSummary;
+    }
+
+
     public void open(Task task){
         items.remove(task);
         MainActivity.closedTasks.remove(task);

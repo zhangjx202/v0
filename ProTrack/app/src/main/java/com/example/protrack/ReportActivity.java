@@ -22,22 +22,30 @@ public class ReportActivity extends Activity {
 
     private static final String TAG = "ProTrack-Report";
 
-    public final static String REPORT = "REPORT";
+    public final static String REPORT_OPEN = "REPORT_OPEN";
+    public final static String REPORT_CLOSE = "REPORT_CLOSE";
     public final static String REPORT_HOURS = "REPORT_HOURS";
+    public final static String REPORT_COUNT = "REPORT_COUNT";
 
     private TextView mHours;
-    private TextView mSummary;
+    private TextView mOpenSummary;
+    private TextView mCloseSummary;
+    private TextView mCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_view);
 
-        mSummary = (TextView) findViewById(R.id.summaryText);
-        mSummary.setText(getIntent().getStringExtra(REPORT));
+        mOpenSummary = (TextView) findViewById(R.id.summaryOpenText);
+        mOpenSummary.setText(getIntent().getStringExtra(REPORT_OPEN));
+        mCloseSummary = (TextView) findViewById(R.id.summaryCloseText);
+        mCloseSummary.setText(getIntent().getStringExtra(REPORT_CLOSE));
 
         mHours = (TextView) findViewById(R.id.hoursText);
         mHours.setText("" + getIntent().getIntExtra(REPORT_HOURS, 0));
+        mCount = (TextView) findViewById(R.id.countText);
+        mHours.setText("" + getIntent().getIntExtra(REPORT_COUNT, 0));
 
         GraphView line_graph = (GraphView) findViewById(R.id.graph);
 

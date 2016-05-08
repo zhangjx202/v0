@@ -154,17 +154,11 @@ public class ListAdapter extends BaseAdapter {
             }
         }
 
-        taskSummary += "Total Tasks: " + getCount() + "\n"
-                + "--Open Tasks: " + openTask + "\n"
+        taskSummary += "--Open Tasks: " + openTask + "\n"
                 + "----Critical: " + oCriticalTask + "\n"
                 + "----Major: " + oMajorTask + "\n"
                 + "----Minor: " + oMinorTask + "\n"
                 + "----Trivial: " + oTrivialTask + "\n"
-                + "--Close Tasks: " + closeTask + "\n"
-                + "----Critical: " + cCriticalTask + "\n"
-                + "----Major: " + cMajorTask + "\n"
-                + "----Minor: " + cMinorTask + "\n"
-                + "----Trivial: " + cTrivialTask + "\n"
         ;
 
         return taskSummary;
