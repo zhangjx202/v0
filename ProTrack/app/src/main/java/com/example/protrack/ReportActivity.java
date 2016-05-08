@@ -37,6 +37,8 @@ public class ReportActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_view);
 
+        if(MainActivity.closedAdapter == null){return;}
+
         mOpenSummary = (TextView) findViewById(R.id.summaryOpenText);
         mOpenSummary.setText(MainActivity.listAdapter.getSummary());
         mCloseSummary = (TextView) findViewById(R.id.summaryCloseText);
