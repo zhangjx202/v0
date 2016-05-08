@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_bottom_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="app.num.graphview.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RelativeLayout
+            android:id="@+id/scroll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/linetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Tasks Summary"
+            android:textSize="28dp"
+            android:layout_marginBottom="20dp"/>
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:title="Graph Title"
+            android:id="@+id/graph"
+            android:layout_below="@+id/linetext"/>
+
+
+        <TextView
+            android:id="@+id/hoursMsgText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Hours Committed"
+            android:layout_below="@+id/graph"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:text="Large Text"
+            android:id="@+id/hoursText"
+            android:layout_below="@+id/hoursMsgText"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/summaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tasks Summary:"
+            android:textSize="20dp"
+            android:layout_below="@id/hoursText"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

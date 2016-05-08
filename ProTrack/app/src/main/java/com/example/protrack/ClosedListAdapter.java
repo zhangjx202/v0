@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +26,7 @@ public class ClosedListAdapter extends BaseAdapter {
 
         public void add(Task toAdd) {
 
-            for(Task Task : items){
-                if(Task.place.equals(toAdd.place)){
-                    Toast.makeText(context, "You already closed this Task!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-
-            //MainActivity.closedTasks.add(toAdd);
+            MainActivity.closedTasks.add(toAdd);
             items.add(toAdd);
             notifyDataSetChanged();
 

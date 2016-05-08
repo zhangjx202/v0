@@ -14,4 +14,12 @@ public class TaskLog {
         this.overview = overview;
         this.comments = comments;
     }
+
+    public int getHours(){
+        return hours;
+    }
+    public boolean setHours(int hours){
+        this.hours = hours;
+        return true;
+    }
 }
