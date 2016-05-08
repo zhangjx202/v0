@@ -14,10 +14,14 @@ public class MainActivity extends TabActivity {
     public static ArrayList<String> projects;
     public static TabHost tabHost;
 
+    private ListAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        mAdapter = new ListAdapter(getApplicationContext());
 
         //Creating the TabHost that will contain the app's tabs
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
@@ -38,17 +42,18 @@ public class MainActivity extends TabActivity {
         calendarTab.setContent(new Intent(this, CalendarActivity.class));
         tabHost.addTab(calendarTab);
 
-        TabHost.TabSpec exportTab = tabHost.newTabSpec("Export View");
-        exportTab.setIndicator("Export");
-        exportTab.setContent(new Intent(this, ExportActivity.class));
-        tabHost.addTab(exportTab);
+        TabHost.TabSpec reportTab = tabHost.newTabSpec("Report View");
+        reportTab.setIndicator("Report");
+        Intent reportIntent = new Intent(this, ReportActivity.class);
+        reportIntent.putExtra(ReportActivity.REPORT, mAdapter.getSummary());
+        reportTab.setContent(reportIntent);
+        tabHost.addTab(reportTab);
 
         tabHost.setCurrentTab(2);
 
         projects = new ArrayList<String>();
 
-
-}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

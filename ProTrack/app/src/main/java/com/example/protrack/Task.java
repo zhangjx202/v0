@@ -23,6 +23,7 @@ public class Task {
     Priority priority;
     Date start;
     Date end;
+    int hour;
 
     ArrayList<TaskLog> taskLog;
 
@@ -34,6 +35,7 @@ public class Task {
         this.start = start;
         this.end = end;
         this.taskLog = new ArrayList<TaskLog>();
+        this.hour = hour;
     }
 
     public String getName(){
@@ -54,6 +56,7 @@ public class Task {
     public Date getEnd(){
         return this.end;
     }
+    public int getHour() { return this.hour; }
     public void setName(String name){
         this.name = name;
     }
@@ -72,4 +75,5 @@ public class Task {
     public void setEnd(Date end){
         this.end = end;
     }
+    public void setHour(int hour) { this.hour = hour; }
 }
