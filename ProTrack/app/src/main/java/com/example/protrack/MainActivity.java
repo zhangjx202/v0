@@ -76,10 +76,13 @@ public class MainActivity extends TabActivity {
         calendarTab.setContent(new Intent(this, CalendarActivity.class));
         tabHost.addTab(calendarTab);
 
-        TabHost.TabSpec exportTab = tabHost.newTabSpec("Export View");
-        exportTab.setIndicator("Export");
-        exportTab.setContent(new Intent(this, ExportActivity.class));
-        tabHost.addTab(exportTab);
+        TabHost.TabSpec reportTab = tabHost.newTabSpec("Report View");
+        reportTab.setIndicator("Report");
+        Intent reportIntent = new Intent(this, ReportActivity.class);
+        reportIntent.putExtra(ReportActivity.REPORT, listAdapter.getSummary());
+        reportIntent.putExtra(ReportActivity.REPORT_HOURS, listAdapter.getTotalHours());
+        reportTab.setContent(reportIntent);
+        tabHost.addTab(reportTab);
 
         tabHost.setCurrentTab(2);
 

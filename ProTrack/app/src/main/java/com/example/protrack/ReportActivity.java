@@ -111,7 +111,11 @@ public class ReportActivity extends Activity {
         series2.setTitle("Closed Tasks");
         line_graph.getLegendRenderer().setVisible(true);
         line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        
+
+        // bounds
+        line_graph.getViewport().setBackgroundColor(Color.WHITE);
+        line_graph.getViewport().setMaxX(12d);
+        line_graph.getViewport().setMaxY(12d);
     }
 
 

@@ -89,6 +89,87 @@ public class ListAdapter extends BaseAdapter {
         return pos;
     }
 
+
+    public int getTotalHours(){
+        int hours = 0;
+
+        for(Task item: items){
+            for(TaskLog log: item.getLog()){
+                hours += log.getHours();
+            }
+        }
+
+        return hours;
+    }
+
+    public String getSummary(){
+        String taskSummary = "";
+
+        int openTask = 0;
+        int closeTask = 0;
+
+        int oCriticalTask = 0, oMajorTask = 0, oMinorTask = 0, oTrivialTask = 0;
+        int cCriticalTask = 0, cMajorTask = 0, cMinorTask = 0, cTrivialTask = 0;
+
+        for(Task item: items){
+            if(item.getStatus() == Task.Status.OPEN){
+                openTask++;
+
+                switch(item.getPriority()){
+                    case CRITICAL:
+                        oCriticalTask++;
+                        break;
+                    case MAJOR:
+                        oMajorTask++;
+                        break;
+                    case MINOR:
+                        oMinorTask++;
+                        break;
+                    case TRIVIAL:
+                        oTrivialTask++;
+                        break;
+                    default:
+                        break;
+                }
+
+            }else if(item.getStatus() == Task.Status.CLOSED){
+                closeTask++;
+
+                switch(item.getPriority()){
+                    case CRITICAL:
+                        cCriticalTask++;
+                        break;
+                    case MAJOR:
+                        cMajorTask++;
+                        break;
+                    case MINOR:
+                        cMinorTask++;
+                        break;
+                    case TRIVIAL:
+                        cTrivialTask++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        taskSummary += "Total Tasks: " + getCount() + "\n"
+                + "--Open Tasks: " + openTask + "\n"
+                + "----Critical: " + oCriticalTask + "\n"
+                + "----Major: " + oMajorTask + "\n"
+                + "----Minor: " + oMinorTask + "\n"
+                + "----Trivial: " + oTrivialTask + "\n"
+                + "--Close Tasks: " + closeTask + "\n"
+                + "----Critical: " + cCriticalTask + "\n"
+                + "----Major: " + cMajorTask + "\n"
+                + "----Minor: " + cMinorTask + "\n"
+                + "----Trivial: " + cTrivialTask + "\n"
+        ;
+
+        return taskSummary;
+    }
+
     /**
      * Get a View that displays the data at the specified position in the data set. You can either
      * create a View manually or inflate it from an XML layout file. When the View is inflated, the
