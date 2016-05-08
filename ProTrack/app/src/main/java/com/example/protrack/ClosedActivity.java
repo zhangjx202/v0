@@ -49,6 +49,7 @@ public class ClosedActivity extends Activity {
             @Override
             public void onClick(View v) {
                 adapter.clear();
+                MainActivity.closedTasks.clear();
             }
         });
 
@@ -66,7 +67,7 @@ public class ClosedActivity extends Activity {
         listView.setAdapter(adapter);
 
         for(Task task : MainActivity.closedTasks){
-            Log.i("ListActivity", "Adding Task to ListView!");
+            Log.i("ClosedActivity", "Adding Task to ListView!");
             adapter.add(task);
         }
     }

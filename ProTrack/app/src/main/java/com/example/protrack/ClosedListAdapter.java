@@ -26,7 +26,6 @@ public class ClosedListAdapter extends BaseAdapter {
 
         public void add(Task toAdd) {
 
-            MainActivity.closedTasks.add(toAdd);
             items.add(toAdd);
             notifyDataSetChanged();
 
