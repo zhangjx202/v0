@@ -154,11 +154,11 @@ public class ListAdapter extends BaseAdapter {
             }
         }
 
-        taskSummary += "--Open Tasks: " + openTask + "\n"
+        taskSummary += "--Open Tasks: " + openTask + "\n"/*
                 + "----Critical: " + oCriticalTask + "\n"
                 + "----Major: " + oMajorTask + "\n"
                 + "----Minor: " + oMinorTask + "\n"
-                + "----Trivial: " + oTrivialTask + "\n"
+                + "----Trivial: " + oTrivialTask + "\n"*/
         ;
 
         return taskSummary;

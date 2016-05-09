@@ -38,4 +38,8 @@ public class TaskDate {
     public void setDay(int day) {
         this.day = day;
     }
+
+    public int toInt(){
+        return year*10000+month*100+day;
+    }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class ClosedListAdapter extends BaseAdapter {
 
         private final Context context;
-        private final List<Task> items = new ArrayList<Task>();
+        public final List<Task> items = new ArrayList<Task>();
 
         public ClosedListAdapter(Context context){
             this.context = context;
@@ -103,11 +103,11 @@ public class ClosedListAdapter extends BaseAdapter {
             }
         }
 
-        taskSummary += "--Close Tasks: " + closeTask + "\n"
+        taskSummary += "--Close Tasks: " + closeTask + "\n"/*
                 + "----Critical: " + cCriticalTask + "\n"
                 + "----Major: " + cMajorTask + "\n"
                 + "----Minor: " + cMinorTask + "\n"
-                + "----Trivial: " + cTrivialTask + "\n"
+                + "----Trivial: " + cTrivialTask + "\n"*/
         ;
 
         return taskSummary;

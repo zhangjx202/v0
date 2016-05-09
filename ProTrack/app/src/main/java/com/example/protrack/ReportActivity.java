@@ -8,11 +8,13 @@ import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jun on 5/7/2016.
@@ -70,87 +72,110 @@ public class ReportActivity extends Activity {
     }
 
     private void updateGraph(){
-        GraphView line_graph = (GraphView) findViewById(R.id.graph);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.removeAllSeries();
 
-        LineGraphSeries<DataPoint> series1 =
-                new LineGraphSeries<DataPoint>(new DataPoint[] {
-                        new DataPoint(0, 1),
-                        new DataPoint(1, 2),
-                        new DataPoint(2, 3),
-                        new DataPoint(3, 4),
-                        new DataPoint(4, 5),
-                        new DataPoint(5, 6),
-                        new DataPoint(6, 7),
-                        new DataPoint(7, 8),
-                        new DataPoint(8, 9),
-                        new DataPoint(9, 10)
+        //first graph
+        BarGraphSeries<DataPoint> series1 =
+                new BarGraphSeries<DataPoint>(new DataPoint[] {
+                        new DataPoint(0, getData((ArrayList<Task>)MainActivity.listAdapter.items
+                                , Task.Priority.CRITICAL)),
+                        new DataPoint(1, getData((ArrayList<Task>)MainActivity.listAdapter.items
+                                , Task.Priority.MAJOR)),
+                        new DataPoint(2, getData((ArrayList<Task>)MainActivity.listAdapter.items
+                                , Task.Priority.MINOR)),
+                        new DataPoint(3, getData((ArrayList<Task>)MainActivity.listAdapter.items
+                                , Task.Priority.TRIVIAL))
                 });
 
-        //series1.setDrawDataPoints(true);
-        //series1.setDataPointsRadius(10);
+        //second graph
+        BarGraphSeries<DataPoint> series2 =
+                new BarGraphSeries<DataPoint>(new DataPoint[] {
+                        new DataPoint(0, getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                                , Task.Priority.CRITICAL)),
+                        new DataPoint(1, getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                                , Task.Priority.MAJOR)),
+                        new DataPoint(2, getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                                , Task.Priority.MINOR)),
+                        new DataPoint(3, getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                                , Task.Priority.TRIVIAL)),
+                });
 
+        //set line color
         series1.setColor(Color.RED);
+        series2.setColor(Color.GREEN);
 
-        line_graph.addSeries(series1);
-
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(line_graph);
-        //staticLabelsFormatter.setHorizontalLabels(new String[]{"Jan", "Feb", "March"});
-        //staticLabelsFormatter.setVerticalLabels(new String[]{"Jan", "Feb", "March"});
-
+        //set tap behavior
         series1.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(ReportActivity.this, "Series: On Data Point clicked: " + dataPoint, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportActivity.this, "Open Remain: " + dataPoint, Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        //second graph
-        LineGraphSeries<DataPoint> series2 =
-                new LineGraphSeries<DataPoint>(new DataPoint[] {
-                        new DataPoint(0, 0),
-                        new DataPoint(1, 0),
-                        new DataPoint(2, 1),
-                        new DataPoint(3, 1),
-                        new DataPoint(4, 2),
-                        new DataPoint(5, 2),
-                        new DataPoint(6, 3),
-                        new DataPoint(7, 3),
-                        new DataPoint(8, 4),
-                        new DataPoint(9, 4)
-                });
-        //draw points
-        //series2.setDrawDataPoints(true);
-        //series2.setDataPointsRadius(10);
-        //fill background
-        series2.setDrawBackground(true);
-        series2.setBackgroundColor(Color.GREEN);
-        //line color
-        series2.setColor(Color.GREEN);
 
         series2.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(ReportActivity.this, "Series: On Data Point clicked: " + dataPoint, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportActivity.this, "Close Completed: " + dataPoint, Toast.LENGTH_SHORT).show();
             }
         });
 
-        line_graph.addSeries(series2);
+
+        //draw points
+        //series2.setDrawDataPoints(true);
+        //series2.setDataPointsRadius(10);
+
+        //fill background
+        //series2.setDrawBackground(true);
+        //series2.setBackgroundColor(Color.GREEN);
+        //line color
+
 
         // legend
         series1.setTitle("Open Tasks");
         series2.setTitle("Closed Tasks");
-        line_graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setVisible(true);
         //line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        line_graph.getLegendRenderer().setFixedPosition(0, 0);
+        graph.getLegendRenderer().setFixedPosition(0, 0);
 
         // bounds
-        line_graph.getViewport().setBackgroundColor(Color.WHITE);
-        line_graph.getViewport().setYAxisBoundsManual(true);
-        line_graph.getViewport().setXAxisBoundsManual(true);
-        line_graph.getViewport().setMinX(0);
-        line_graph.getViewport().setMaxX(12);
-        line_graph.getViewport().setMinY(0);
-        line_graph.getViewport().setMaxY(12);
+        graph.getViewport().setBackgroundColor(Color.WHITE);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(5);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(-0.25);
+        graph.getViewport().setMaxX(3.25);
+
+        //label
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        staticLabelsFormatter.setHorizontalLabels(new String[]{"Critical", "Major", "Minor", "Trivial"});
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        //staticLabelsFormatter.setVerticalLabels(new String[]{"Jan", "Feb", "March"});
+
+        //set spacing
+        series1.setSpacing(50);
+        series2.setSpacing(50);
+
+        //show value
+        series1.setDrawValuesOnTop(true);
+        series2.setDrawValuesOnTop(true);
+        series1.setValuesOnTopColor(Color.RED);
+        series2.setValuesOnTopColor(Color.GREEN);
+
+        //add to graph
+        graph.addSeries(series1);
+        graph.addSeries(series2);
+    }
+
+    private int getData(ArrayList<Task> items, Task.Priority priority){
+        int data = 0;
+        for(Task item: items){
+            if(item.getPriority() == priority){
+                data++;
+            }
+        }
+        return data;
     }
 }
