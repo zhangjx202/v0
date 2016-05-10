@@ -27,11 +27,16 @@ public class ListAdapter extends BaseAdapter {
 
     public void add(Task toAdd) {
 
-        for(Task Task : items){
-            if(Task.getName().equals(toAdd.getName())){
+        for(Task task : items){
+            if(task.getName().equals(toAdd.getName())){
                 Toast.makeText(context, "You already added this Task!", Toast.LENGTH_LONG).show();
                 return;
             }
+        }
+
+        if(toAdd.getStatus().equals(Task.Status.CLOSED)){
+            close(toAdd);
+            return;
         }
 
         //MainActivity.openTasks.add(toAdd);

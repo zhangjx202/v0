@@ -6,8 +6,44 @@
     android:id="@android:id/tabhost">
 
     <RelativeLayout
+        android:id="@+id/Container"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/ActionBar"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/myBlue">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="ProTrack"
+            android:textSize="35dp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/workspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/appName"
+            android:layout_alignBottom="@+id/appName"
+            android:paddingLeft="10dp"
+            android:text="Work"
+            android:textSize="25dp"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/LinearLayout01"
         android:orientation="vertical"
+        android:layout_below="@id/ActionBar"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
@@ -15,7 +51,8 @@
             android:id="@android:id/tabs"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:background="@color/myGray">
         </TabWidget>
 
         <FrameLayout
@@ -23,6 +60,8 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
         </FrameLayout>
+
+    </RelativeLayout>
 
     </RelativeLayout>
 
