@@ -3,6 +3,10 @@ package com.example.protrack;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +27,12 @@ public class ReportActivity extends Activity {
 
     private static final String TAG = "ProTrack-Report";
 
-    public final static String REPORT_OPEN = "REPORT_OPEN";
-    public final static String REPORT_CLOSE = "REPORT_CLOSE";
-    public final static String REPORT_HOURS = "REPORT_HOURS";
-    public final static String REPORT_COUNT = "REPORT_COUNT";
+    public final static int ALL = 0;
+    public final static int OPEN = 1;
+    public final static int CLOSED = 2;
+    private String[] items = new String[]{"All Tasks", "Open Tasks", "Close Tasks"};
 
+    private Spinner spinner;
     private TextView mHours;
     private TextView mOpenSummary;
     private TextView mCloseSummary;
@@ -55,50 +60,103 @@ public class ReportActivity extends Activity {
             }
 
         }
+
+        spinner = (Spinner)findViewById(R.id.task_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this
+                , android.R.layout.simple_spinner_dropdown_item
+                , items);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                updateReport(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-
-        mOpenSummary.setText(MainActivity.listAdapter.getSummary());
-        mCloseSummary.setText(MainActivity.closedAdapter.getSummary());
-        mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
-                + MainActivity.listAdapter.getTotalHours()));
-        mCount.setText("" + (MainActivity.closedAdapter.getCount()
-                + MainActivity.listAdapter.getCount()));
-
-        updateGraph();
+        updateReport(0);
     }
 
-    private void updateGraph(){
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    private void updateReport(int state){
+        if(state == ALL){
+            mOpenSummary.setText("Open Tasks: " + MainActivity.listAdapter.getCount());
+            mCloseSummary.setText("Closed Tasks: " + MainActivity.closedAdapter.getCount());
+            mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
+                    + MainActivity.listAdapter.getTotalHours()));
+            mCount.setText("" + (MainActivity.listAdapter.getCount()
+                    + MainActivity.closedAdapter.getCount()));
+        }else if(state == OPEN){
+            mOpenSummary.setText("Open Tasks: " + MainActivity.listAdapter.getCount());
+            mCloseSummary.setText("");
+            mHours.setText("" + MainActivity.listAdapter.getTotalHours());
+            mCount.setText("");
+
+        }else if(state == CLOSED){
+            mOpenSummary.setText("");
+            mCloseSummary.setText("Closed Tasks: " + MainActivity.closedAdapter.getCount());
+            mHours.setText("" + MainActivity.closedAdapter.getTotalHours());
+            mCount.setText("");
+        }
+
+
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.removeAllSeries();
+
+        //find max of data
+        int[] data = new int[8];
+        data[0] = getData((ArrayList<Task>)MainActivity.listAdapter.items
+                , Task.Priority.CRITICAL);
+        data[1] = getData((ArrayList<Task>)MainActivity.listAdapter.items
+                , Task.Priority.MAJOR);
+        data[2] = getData((ArrayList<Task>)MainActivity.listAdapter.items
+                , Task.Priority.MINOR);
+        data[3] = getData((ArrayList<Task>)MainActivity.listAdapter.items
+                , Task.Priority.TRIVIAL);
+        data[4] = getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                , Task.Priority.CRITICAL);
+        data[5] = getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                , Task.Priority.MAJOR);
+        data[6] = getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                , Task.Priority.MINOR);
+        data[7] = getData((ArrayList<Task>)MainActivity.closedAdapter.items
+                , Task.Priority.TRIVIAL);
+
+        int max = data[0];
+        for(int d: data){
+            max = Math.max(max, d);
+        }
 
         //first graph
         BarGraphSeries<DataPoint> series1 =
                 new BarGraphSeries<DataPoint>(new DataPoint[] {
-                        new DataPoint(0, getData((ArrayList<Task>)MainActivity.listAdapter.items
-                                , Task.Priority.CRITICAL)),
-                        new DataPoint(1, getData((ArrayList<Task>)MainActivity.listAdapter.items
-                                , Task.Priority.MAJOR)),
-                        new DataPoint(2, getData((ArrayList<Task>)MainActivity.listAdapter.items
-                                , Task.Priority.MINOR)),
-                        new DataPoint(3, getData((ArrayList<Task>)MainActivity.listAdapter.items
-                                , Task.Priority.TRIVIAL))
+                        new DataPoint(0, data[0]),
+                        new DataPoint(1, data[1]),
+                        new DataPoint(2, data[2]),
+                        new DataPoint(3, data[3])
                 });
 
         //second graph
         BarGraphSeries<DataPoint> series2 =
                 new BarGraphSeries<DataPoint>(new DataPoint[] {
-                        new DataPoint(0, getData((ArrayList<Task>)MainActivity.closedAdapter.items
-                                , Task.Priority.CRITICAL)),
-                        new DataPoint(1, getData((ArrayList<Task>)MainActivity.closedAdapter.items
-                                , Task.Priority.MAJOR)),
-                        new DataPoint(2, getData((ArrayList<Task>)MainActivity.closedAdapter.items
-                                , Task.Priority.MINOR)),
-                        new DataPoint(3, getData((ArrayList<Task>)MainActivity.closedAdapter.items
-                                , Task.Priority.TRIVIAL)),
+                        new DataPoint(0, data[4]),
+                        new DataPoint(1, data[5]),
+                        new DataPoint(2, data[6]),
+                        new DataPoint(3, data[7]),
                 });
 
         //set line color
@@ -139,10 +197,9 @@ public class ReportActivity extends Activity {
         graph.getLegendRenderer().setFixedPosition(0, 0);
 
         // bounds
-        graph.getViewport().setBackgroundColor(Color.WHITE);
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(5);
+        graph.getViewport().setMaxY(max * 1.5);
 
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(-0.25);
@@ -163,6 +220,9 @@ public class ReportActivity extends Activity {
         series2.setDrawValuesOnTop(true);
         series1.setValuesOnTopColor(Color.RED);
         series2.setValuesOnTopColor(Color.GREEN);
+
+        //background color
+        graph.getViewport().setBackgroundColor(Color.WHITE);
 
         //add to graph
         graph.addSeries(series1);
