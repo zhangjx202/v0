@@ -19,6 +19,7 @@ import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Jun on 5/7/2016.
@@ -34,8 +35,7 @@ public class ReportActivity extends Activity {
 
     private Spinner spinner;
     private TextView mHours;
-    private TextView mOpenSummary;
-    private TextView mCloseSummary;
+    private TextView mCommon;
     private TextView mCount;
 
     private ClosedListAdapter adapter;
@@ -46,10 +46,9 @@ public class ReportActivity extends Activity {
 
         setContentView(R.layout.report_view);
 
-        mOpenSummary = (TextView) findViewById(R.id.summaryOpenText);
-        mCloseSummary = (TextView) findViewById(R.id.summaryCloseText);
         mHours = (TextView) findViewById(R.id.hoursText);
         mCount = (TextView) findViewById(R.id.countText);
+        mCommon = (TextView) findViewById(R.id.commonText);
 
         if(MainActivity.closedAdapter == null){
             adapter = new ClosedListAdapter(getApplicationContext());
@@ -93,26 +92,6 @@ public class ReportActivity extends Activity {
     }
 
     private void updateReport(int state){
-        if(state == ALL){
-            mOpenSummary.setText("Open Tasks: " + MainActivity.listAdapter.getCount());
-            mCloseSummary.setText("Closed Tasks: " + MainActivity.closedAdapter.getCount());
-            mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
-                    + MainActivity.listAdapter.getTotalHours()));
-            mCount.setText("" + (MainActivity.listAdapter.getCount()
-                    + MainActivity.closedAdapter.getCount()));
-        }else if(state == OPEN){
-            mOpenSummary.setText("Open Tasks: " + MainActivity.listAdapter.getCount());
-            mCloseSummary.setText("");
-            mHours.setText("" + MainActivity.listAdapter.getTotalHours());
-            mCount.setText("");
-
-        }else if(state == CLOSED){
-            mOpenSummary.setText("");
-            mCloseSummary.setText("Closed Tasks: " + MainActivity.closedAdapter.getCount());
-            mHours.setText("" + MainActivity.closedAdapter.getTotalHours());
-            mCount.setText("");
-        }
-
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.removeAllSeries();
@@ -167,14 +146,14 @@ public class ReportActivity extends Activity {
         series1.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(ReportActivity.this, "Open Remain: " + dataPoint, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportActivity.this, "" + dataPoint, Toast.LENGTH_SHORT).show();
             }
         });
 
         series2.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(ReportActivity.this, "Close Completed: " + dataPoint, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportActivity.this, "" + dataPoint, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -188,13 +167,6 @@ public class ReportActivity extends Activity {
         //series2.setBackgroundColor(Color.GREEN);
         //line color
 
-
-        // legend
-        series1.setTitle("Open Tasks");
-        series2.setTitle("Closed Tasks");
-        graph.getLegendRenderer().setVisible(true);
-        //line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graph.getLegendRenderer().setFixedPosition(0, 0);
 
         // bounds
         graph.getViewport().setYAxisBoundsManual(true);
@@ -224,9 +196,123 @@ public class ReportActivity extends Activity {
         //background color
         graph.getViewport().setBackgroundColor(Color.WHITE);
 
-        //add to graph
-        graph.addSeries(series1);
-        graph.addSeries(series2);
+        //top words use in overview and comments
+        HashMap<String, Integer> allWords = new HashMap<String, Integer>();
+        HashMap<String, Integer> openWords = new HashMap<String, Integer>();
+        HashMap<String, Integer> closedWords = new HashMap<String, Integer>();
+
+        for(Task item: MainActivity.listAdapter.items){
+            for(TaskLog log: item.taskLog){
+                for(String s: log.overview.split(" ")){
+                    if(allWords.containsKey(s)){
+                        allWords.put(s, allWords.get(s).intValue() + 1);
+                        openWords.put(s, openWords.get(s).intValue() + 1);
+                    }else{
+                        allWords.put(s, 1);
+                        openWords.put(s, 1);
+                        closedWords.put(s, 0);
+                    }
+                }
+                for(String s: log.comments.split(" ")){
+                    if(allWords.containsKey(s)){
+                        allWords.put(s, allWords.get(s).intValue() + 1);
+                        openWords.put(s, openWords.get(s).intValue() + 1);
+                    }else{
+                        allWords.put(s, 1);
+                        openWords.put(s, 1);
+                        closedWords.put(s, 0);
+                    }
+                }
+            }
+        }
+
+        for(Task item: MainActivity.closedAdapter.items){
+            for(TaskLog log: item.taskLog){
+                for(String s: log.overview.split(" ")){
+                    if(allWords.containsKey(s)){
+                        allWords.put(s, allWords.get(s).intValue() + 1);
+                        closedWords.put(s, closedWords.get(s).intValue() + 1);
+                    }else{
+                        allWords.put(s, 1);
+                        closedWords.put(s, 1);
+                        openWords.put(s, 0);
+                    }
+                }
+                for(String s: log.comments.split(" ")){
+                    if(allWords.containsKey(s)){
+                        allWords.put(s, allWords.get(s).intValue() + 1);
+                        closedWords.put(s, closedWords.get(s).intValue() + 1);
+                    }else{
+                        allWords.put(s, 1);
+                        closedWords.put(s, 1);
+                        openWords.put(s, 0);
+                    }
+                }
+            }
+        }
+
+
+
+        //add to graph and set messages
+        if(state == ALL){
+            mHours.setText("" + (MainActivity.closedAdapter.getTotalHours()
+                    + MainActivity.listAdapter.getTotalHours()));
+            mCount.setText("Total Tasks: "
+                    + (MainActivity.listAdapter.getCount()
+                    + MainActivity.closedAdapter.getCount()));
+
+            //Figure out the top words
+            ArrayList<String> words = new ArrayList<String>();
+            ArrayList<Integer> counts = new ArrayList<Integer>();
+
+            while(words.size() < 10){
+                String word = "";
+                Integer count = 0;
+
+                for(String s: allWords.keySet()){
+                    if(allWords.get(s).intValue() > count.intValue()){
+                        word = s;
+                        count = allWords.get(s);
+                    }
+                }
+
+                words.add(word);
+                counts.add(count);
+                allWords.remove(word);
+            }
+
+            mCommon.setText(allWords.toString());
+
+            // legend
+            series1.setTitle("Open Tasks");
+            series2.setTitle("Closed Tasks");
+            graph.getLegendRenderer().setVisible(true);
+            //line_graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+            graph.getLegendRenderer().setFixedPosition(0, 0);
+
+            graph.addSeries(series1);
+            graph.addSeries(series2);
+        }else if(state == OPEN){
+            mHours.setText("" + MainActivity.listAdapter.getTotalHours());
+            mCount.setText("Open Tasks: " + MainActivity.listAdapter.getCount());
+
+            mCommon.setText(openWords.toString());
+
+            graph.getLegendRenderer().setVisible(false);
+
+            graph.addSeries(series1);
+
+        }else if(state == CLOSED){
+            mHours.setText("" + MainActivity.closedAdapter.getTotalHours());
+            mCount.setText("Closed Tasks: " + MainActivity.closedAdapter.getCount());
+
+            mCommon.setText(closedWords.toString());
+
+            graph.getLegendRenderer().setVisible(false);
+
+            graph.addSeries(series2);
+        }
+
     }
 
     private int getData(ArrayList<Task> items, Task.Priority priority){
@@ -238,4 +324,5 @@ public class ReportActivity extends Activity {
         }
         return data;
     }
+
 }

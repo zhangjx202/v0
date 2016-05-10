@@ -43,6 +43,7 @@
                 android:layout_height="200dip"
                 android:title="Graph Title"
                 android:id="@+id/graph"
+                android:layout_marginBottom="20dp"
                 android:layout_below="@+id/linetext"/>
 
             <TextView
@@ -64,38 +65,31 @@
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:id="@+id/countMsgText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Task Log"
-                android:textSize="24dp"
-                android:layout_below="@+id/hoursText"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24dp"
                 android:id="@+id/countText"
-                android:layout_below="@+id/countMsgText"
+                android:layout_below="@+id/hoursText"
                 android:layout_marginBottom="20dp"
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:id="@+id/summaryOpenText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tasks Summary:"
-                android:textSize="20dp"
-                android:layout_below="@id/countText"/>
+                android:textSize="24dp"
+                android:id="@+id/commonMsgText"
+                android:layout_below="@+id/countText"
+                android:text="Top 10 Words:"
+                android:layout_centerHorizontal="true" />
 
             <TextView
-                android:id="@+id/summaryCloseText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tasks Summary:"
-                android:textSize="20dp"
-                android:layout_below="@id/summaryOpenText"/>
+                android:textSize="24dp"
+                android:id="@+id/commonText"
+                android:layout_below="@+id/commonMsgText"
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
     </ScrollView>
 
