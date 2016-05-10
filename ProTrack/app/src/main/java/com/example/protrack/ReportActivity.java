@@ -3,6 +3,7 @@ package com.example.protrack;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -269,6 +270,8 @@ public class ReportActivity extends Activity {
                 String word = "";
                 Integer count = 0;
 
+                Log.i("Size of Map", ""+allWords.size());
+
                 for(String s: allWords.keySet()){
                     if(allWords.get(s).intValue() > count.intValue()){
                         word = s;
@@ -281,7 +284,11 @@ public class ReportActivity extends Activity {
                 allWords.remove(word);
             }
 
-            mCommon.setText(allWords.toString());
+            String msg = "";
+            for(int i = 0; i < 10; i++){
+                msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+            }
+            mCommon.setText(msg);
 
             // legend
             series1.setTitle("Open Tasks");
@@ -296,7 +303,31 @@ public class ReportActivity extends Activity {
             mHours.setText("" + MainActivity.listAdapter.getTotalHours());
             mCount.setText("Open Tasks: " + MainActivity.listAdapter.getCount());
 
-            mCommon.setText(openWords.toString());
+            //Figure out the top words
+            ArrayList<String> words = new ArrayList<String>();
+            ArrayList<Integer> counts = new ArrayList<Integer>();
+
+            while(words.size() < 10){
+                String word = "";
+                Integer count = 0;
+
+                for(String s: openWords.keySet()){
+                    if(openWords.get(s).intValue() > count.intValue()){
+                        word = s;
+                        count = openWords.get(s);
+                    }
+                }
+
+                words.add(word);
+                counts.add(count);
+                openWords.remove(word);
+            }
+
+            String msg = "";
+            for(int i = 0; i < 10; i++){
+                msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+            }
+            mCommon.setText(msg);
 
             graph.getLegendRenderer().setVisible(false);
 
@@ -306,7 +337,31 @@ public class ReportActivity extends Activity {
             mHours.setText("" + MainActivity.closedAdapter.getTotalHours());
             mCount.setText("Closed Tasks: " + MainActivity.closedAdapter.getCount());
 
-            mCommon.setText(closedWords.toString());
+            //Figure out the top words
+            ArrayList<String> words = new ArrayList<String>();
+            ArrayList<Integer> counts = new ArrayList<Integer>();
+
+            while(words.size() < 10){
+                String word = "";
+                Integer count = 0;
+
+                for(String s: closedWords.keySet()){
+                    if(closedWords.get(s).intValue() > count.intValue()){
+                        word = s;
+                        count = closedWords.get(s);
+                    }
+                }
+
+                words.add(word);
+                counts.add(count);
+                closedWords.remove(word);
+            }
+
+            String msg = "";
+            for(int i = 0; i < 10; i++){
+                msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+            }
+            mCommon.setText(msg);
 
             graph.getLegendRenderer().setVisible(false);
 
