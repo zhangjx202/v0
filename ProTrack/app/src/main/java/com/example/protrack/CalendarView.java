@@ -91,13 +91,13 @@ public class CalendarView extends LinearLayout {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> view, View cell, int position, long id) {
-                        for(int i=0; i<view.getChildCount();i++){
+                        for (int i = 0; i < view.getChildCount(); i++) {
                             view.getChildAt(i).setBackgroundColor(Color.WHITE);
                         }
                         cell.findViewById(R.id.day).setBackgroundColor(Color.parseColor("#E1E1E1"));
                         CalendarAdapter adapter = (CalendarAdapter) grid.getAdapter();
                         Date gridDate = adapter.getGridDate(position);
-                        ((CalendarActivity)getContext()).getTasks(gridDate);
+                        ((CalendarActivity) getContext()).getTasks(gridDate);
 
                     }
                 }
@@ -106,6 +106,10 @@ public class CalendarView extends LinearLayout {
 
     public void updateCalendar(){
         updateCalendar(null);
+    }
+
+    public CalendarAdapter getAdapter(){
+       return (CalendarAdapter) grid.getAdapter();
     }
 
     public void updateCalendar(HashSet<Date> events){
@@ -134,7 +138,28 @@ public class CalendarView extends LinearLayout {
         textDate.setText(sdf.format(currentDate.getTime()));
     }
 
-    private class CalendarAdapter extends ArrayAdapter<Date> {
+    public void setDateGray(Date date){
+        for(int i = 0; i<grid.getChildCount();i++){
+            CalendarAdapter adapter = (CalendarAdapter) grid.getAdapter();
+            Date gridDate = adapter.getGridDate(i);
+            if(toInt(gridDate)== toInt(date)){
+                grid.findViewById(R.id.day).setBackgroundColor(Color.parseColor("#E1E1E1"));
+            }
+        }
+    }
+
+    public int toInt(Date date){
+        //Get the Day Month and Year of the selected Date
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Toast.makeText(getContext(),  month + " " + day + " " + year, Toast.LENGTH_LONG).show();
+        return year*10000+(month+1)*100+day;
+    }
+
+    public class CalendarAdapter extends ArrayAdapter<Date> {
         // days with events
         private HashSet<Date> eventDays;
         private Date present;
@@ -200,7 +225,7 @@ public class CalendarView extends LinearLayout {
             {
                 // if it is today, set it to blue/bold
                 ((TextView)view).setTypeface(null, Typeface.BOLD);
-                ((TextView)view).setTextColor(Color.BLUE);
+                ((TextView)view).setTextColor(Color.argb(126, 77, 169, 226));
             }
 
             // set text

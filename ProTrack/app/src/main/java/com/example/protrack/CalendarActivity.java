@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import java.util.Date;
  */
 public class CalendarActivity extends Activity {
     private static final int TASK_DETAIL_REQUEST=10;
-    private Date selectedDate = new Date();
+    private Date selectedDate = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,16 @@ public class CalendarActivity extends Activity {
         setContentView(R.layout.calendar_view);
         CalendarView cv = ((CalendarView)findViewById(R.id.calendar_view));
         cv.updateCalendar(null);
+
+        /*GridView grid = (GridView) cv.findViewById(R.id.calendar_grid);
+        CalendarView.CalendarAdapter adapter = cv.getAdapter();
+        for(int i = 0; i<grid.getChildCount();i++){
+            if (toInt(adapter.getItem(i)) == toInt(selectedDate)){
+                grid.getChildAt(i).setBackgroundColor(Color.parseColor("#E1E1E1"));
+            }
+        }*/
+
+        //cv.setDateGray(selectedDate);
 
         LinearLayout main = (LinearLayout) findViewById(R.id.linear);
         main.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
@@ -59,7 +70,9 @@ public class CalendarActivity extends Activity {
     @Override
     public void onResume(){
         super.onResume();
-        //getTasks(selectedDate);
+        if(selectedDate != null) {
+            getTasks(selectedDate);
+        }
     }
 
     public void getTasks(Date date){
@@ -88,6 +101,27 @@ public class CalendarActivity extends Activity {
                 task.setText(temp.getName());
                 start.setText(monthIntToString(temp.getStart().getMonth()) + " " + temp.getStart().getDay()+ "-");
                 end.setText(monthIntToString(temp.getEnd().getMonth()) + " " + temp.getEnd().getDay());
+
+                box.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent data = new Intent(getApplicationContext(), TaskDetail.class);
+                        data.putExtra("taskName", temp.getName());
+                        data.putExtra("projectName", temp.getProject());
+                        data.putExtra("status", temp.getStatus());
+                        data.putExtra("priority", temp.getPriority());
+                        data.putExtra("startMonth", temp.getStart().getMonth());
+                        data.putExtra("startDay", temp.getStart().getDay());
+                        data.putExtra("startYear", temp.getStart().getYear());
+                        data.putExtra("endMonth", temp.getEnd().getMonth());
+                        data.putExtra("endDay", temp.getEnd().getDay());
+                        data.putExtra("endYear", temp.getEnd().getYear());
+                        startActivityForResult(data, TASK_DETAIL_REQUEST);
+
+                    }
+                });
 
                 main.addView(view);
 
