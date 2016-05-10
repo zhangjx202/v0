@@ -102,7 +102,7 @@ public class CalendarView extends LinearLayout {
     }
 
     public void updateCalendar(HashSet<Date> events){
-        ArrayList<Date> cells = new ArrayList<>();
+        ArrayList<Date> cells = new ArrayList<Date>();
         Calendar calendar = (Calendar)currentDate.clone();
 
         // determine the cell for current month's beginning
