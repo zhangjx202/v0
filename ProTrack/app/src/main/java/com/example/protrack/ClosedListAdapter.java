@@ -25,6 +25,11 @@ public class ClosedListAdapter extends BaseAdapter {
         }
 
         public void add(Task toAdd) {
+            for(Task task : items){
+                if(task.getName().equals(toAdd.getName())){
+                    return;
+                }
+            }
 
             items.add(toAdd);
             notifyDataSetChanged();
