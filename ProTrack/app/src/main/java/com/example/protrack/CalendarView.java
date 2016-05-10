@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class CalendarView extends LinearLayout {
     private ImageView nextButton;
     private TextView textDate;
     private GridView grid;
+    private Date selectedDate;
 
     private static final int DAYS_COUNT = 42;
 
@@ -92,6 +95,10 @@ public class CalendarView extends LinearLayout {
                             view.getChildAt(i).setBackgroundColor(Color.WHITE);
                         }
                         cell.findViewById(R.id.day).setBackgroundColor(Color.parseColor("#E1E1E1"));
+                        CalendarAdapter adapter = (CalendarAdapter) grid.getAdapter();
+                        Date gridDate = adapter.getGridDate(position);
+                        ((CalendarActivity)getContext()).getTasks(gridDate);
+
                     }
                 }
         );
@@ -139,6 +146,14 @@ public class CalendarView extends LinearLayout {
             this.eventDays = eventDays;
             inflater = LayoutInflater.from(context);
             present = current.getTime();
+        }
+
+        public Date getGridDate(int position){
+            return getItem(position);
+        }
+
+        public  void makeToast(int position){
+            Toast.makeText(getContext(), getItem(position).toString(), Toast.LENGTH_LONG).show();
         }
 
         @Override

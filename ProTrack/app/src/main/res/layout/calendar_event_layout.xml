@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15px"
+        android:id="@+id/box"
+        android:layout_margin="30px"
+        android:background="#7e4da9e2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:30 PM"
+            android:id="@+id/startTime" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1:30 PM"
+            android:layout_below="@+id/startTime"
+            android:id="@+id/endTime" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Day"
+            android:layout_centerVertical="true"
+            android:id="@+id/allDay"
+            android:enabled="false"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Project Name"
+            android:id="@+id/projectName"
+            android:layout_toRightOf="@+id/startTime"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="27dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Name"
+            android:id="@+id/taskName"
+            android:layout_toRightOf="@+id/startTime"
+            android:layout_below="@+id/projectName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="27dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
