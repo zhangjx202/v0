@@ -25,6 +25,12 @@ public class DetailAdapter extends BaseAdapter {
     }
 
     public void add(TaskLog toAdd) {
+        for(TaskLog log : items){
+            if(log.overview.equals(toAdd.overview)){
+                return;
+            }
+        }
+
         items.add(toAdd);
         notifyDataSetChanged();
     }
