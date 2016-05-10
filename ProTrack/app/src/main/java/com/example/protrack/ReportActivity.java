@@ -84,6 +84,7 @@ public class ReportActivity extends Activity {
     @Override
     protected void onResume(){
         super.onResume();
+        spinner.setSelection(0);
         updateReport(0);
     }
 
