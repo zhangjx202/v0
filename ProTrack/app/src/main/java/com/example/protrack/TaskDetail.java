@@ -29,8 +29,9 @@ public class TaskDetail extends Activity {
 
         setContentView(R.layout.task_detail);
 
-        adapter = new DetailAdapter(getApplicationContext());
-        MainActivity.detailAdapter = adapter;
+        //adapter = new DetailAdapter(getApplicationContext());
+        //MainActivity.detailAdapter = adapter;
+        adapter = MainActivity.detailAdapter;
 
         // TODO - implement the Activity
         Intent data = getIntent();
@@ -46,6 +47,13 @@ public class TaskDetail extends Activity {
         int endY = data.getIntExtra("endYear", 1);
 
         for(Task task1 : MainActivity.openTasks){
+            if(task1.getName().equals(taskName)){
+                task = task1;
+                break;
+            }
+        }
+
+        for(Task task1 : MainActivity.closedTasks){
             if(task1.getName().equals(taskName)){
                 task = task1;
                 break;
@@ -123,13 +131,29 @@ public class TaskDetail extends Activity {
             }
         });
 
+
         TextView closeView = (TextView) findViewById(R.id.statusDetail);
+
+        if(task != null && task.getStatus().equals(Task.Status.CLOSED)){
+            closeView.setText("Open Task");
+        }
+
         closeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.listAdapter.close(task);
-                setResult(RESULT_OK);
-                finish();
+                if(task != null && task.getStatus().equals(Task.Status.OPEN)) {
+                    Log.i("TaskDetail", "Closing Task");
+                    task.setStatus(Task.Status.CLOSED);
+                    MainActivity.listAdapter.close(task);
+                    setResult(RESULT_OK);
+                    finish();
+                } else if(task != null && task.getStatus().equals(Task.Status.CLOSED)){
+                    Log.i("TaskDetail", "Opening Task");
+                    task.setStatus(Task.Status.OPEN);
+                    MainActivity.closedAdapter.open(task);
+                    setResult(RESULT_OK);
+                    finish();
+                }
             }
         });
 

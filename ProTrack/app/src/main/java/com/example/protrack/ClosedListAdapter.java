@@ -119,6 +119,7 @@ public class ClosedListAdapter extends BaseAdapter {
         MainActivity.closedTasks.remove(task);
         notifyDataSetChanged();
 
+        MainActivity.openTasks.add(task);
         MainActivity.listAdapter.add(task);
     }
 

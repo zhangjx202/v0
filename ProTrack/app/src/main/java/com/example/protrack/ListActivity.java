@@ -31,8 +31,9 @@ public class ListActivity extends Activity {
         listView = (ListView) findViewById(R.id.listView);
 
         // Create a new TodoListAdapter for this ListActivity's ListView
-        adapter = new ListAdapter(getApplicationContext());
-        MainActivity.listAdapter = adapter;
+        //adapter = new ListAdapter(getApplicationContext());
+        adapter = MainActivity.listAdapter;
+        //MainActivity.listAdapter = adapter;
 
         // Put divider between ToDoItems and FooterView
         listView.setFooterDividersEnabled(true);

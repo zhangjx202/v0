@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ public class ClosedActivity extends Activity {
 
     private static final int WIPE_TASKS_REQUEST = 10;
     private static final int EXPORT_TASKS_REQUEST = 20;
+    private static final int TASK_DETAIL_REQUEST = 30;
     ClosedListAdapter adapter;
     ListView listView;
 
@@ -28,8 +30,10 @@ public class ClosedActivity extends Activity {
         listView = (ListView) findViewById(R.id.listViewClosed);
 
         // Create a new TodoListAdapter for this ListActivity's ListView
-        adapter = new ClosedListAdapter(getApplicationContext());
-        MainActivity.closedAdapter = adapter;
+        //adapter = new ClosedListAdapter(getApplicationContext());
+        //MainActivity.closedAdapter = adapter;
+
+        adapter = MainActivity.closedAdapter;
 
         // Put divider between ToDoItems and FooterView
         listView.setFooterDividersEnabled(true);
@@ -42,6 +46,30 @@ public class ClosedActivity extends Activity {
         TextView wipeTasks = (TextView) findViewById(R.id.wipeTasks);
 
         TextView exportTasks = (TextView) findViewById(R.id.exportTasks);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent data = new Intent(getApplicationContext(), TaskDetail.class);
+                Task curr = (Task) adapter.getItem(position);
+                data.putExtra("taskName", curr.getName());
+                data.putExtra("projectName", curr.getProject());
+                data.putExtra("status", curr.getStatus());
+                data.putExtra("priority", curr.getPriority());
+                data.putExtra("startMonth", curr.getStart().getMonth());
+                data.putExtra("startDay", curr.getStart().getDay());
+                data.putExtra("startYear", curr.getStart().getYear());
+                data.putExtra("endMonth", curr.getEnd().getMonth());
+                data.putExtra("endDay", curr.getEnd().getDay());
+                data.putExtra("endYear", curr.getEnd().getYear());
+                startActivityForResult(data, TASK_DETAIL_REQUEST);
+
+            }
+        });
 
 
         // Attach Listener to addTaskView
