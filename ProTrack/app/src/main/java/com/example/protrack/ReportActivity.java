@@ -287,7 +287,9 @@ public class ReportActivity extends Activity {
 
             String msg = "";
             for(int i = 0; i < 10; i++){
-                msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+				if(counts.get(i) > 0)){
+					msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+				}
             }
             mCommon.setText(msg);
 
@@ -326,7 +328,9 @@ public class ReportActivity extends Activity {
 
             String msg = "";
             for(int i = 0; i < 10; i++){
-                msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+				if(counts.get(i) > 0)){
+					msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+				}
             }
             mCommon.setText(msg);
 
@@ -360,7 +364,9 @@ public class ReportActivity extends Activity {
 
             String msg = "";
             for(int i = 0; i < 10; i++){
-                msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+				if(counts.get(i) > 0)){
+					msg += words.get(i) + " = " + counts.get(i).toString() + "\n";
+				}
             }
             mCommon.setText(msg);
 
